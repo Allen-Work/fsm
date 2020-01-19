@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gtstar.fsm.mapper.FileListMapper">
+  <resultMap id="BaseResultMap" type="com.gtstar.fsm.entity.FileList">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="file_id" jdbcType="BIGINT" property="fileId" />
+    <result column="share_id" jdbcType="VARCHAR" property="shareId" />
+    <result column="level" jdbcType="INTEGER" property="level" />
+    <result column="file_name" jdbcType="VARCHAR" property="fileName" />
+    <result column="directory" jdbcType="VARCHAR" property="directory" />
+    <result column="size" jdbcType="DOUBLE" property="size" />
+    <result column="file_type" jdbcType="INTEGER" property="fileType" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="delete_time" jdbcType="TIMESTAMP" property="deleteTime" />
+    <result column="delete_flag" jdbcType="INTEGER" property="deleteFlag" />
+    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+
+  <update id="updateBatchFileList" parameterType="list" keyProperty="id" useGeneratedKeys="true">
+    <foreach collection="list" index="index" item="item" open="" separator=";" close="">
+      update file_list fl
+      <set>
+        fl.share_id = #{item.shareId,jdbcType=VARCHAR},
+        fl.level = #{item.level,jdbcType=INTEGER},
+        fl.file_name = #{item.fileName,jdbcType=VARCHAR},
+        fl.directory = #{item.directory,jdbcType=VARCHAR},
+        fl.size = #{item.size,jdbcType=DOUBLE},
+        fl.file_type = #{item.fileType,jdbcType=INTEGER},
+        fl.create_time = #{item.createTime,jdbcType=TIMESTAMP},
+        fl.update_time = #{item.updateTime,jdbcType=TIMESTAMP},
+        fl.delete_time = #{item.deleteTime,jdbcType=TIMESTAMP},
+        fl.delete_flag = #{item.deleteFlag,jdbcType=INTEGER},
+        fl.parent_id = #{item.parentId,jdbcType=BIGINT},
+        fl.remark = #{item.remark,jdbcType=VARCHAR}
+      </set>
+      WHERE fl.file_id = #{item.fileId,jdbcType=BIGINT}
+    </foreach>
+  </update>
+</mapper>

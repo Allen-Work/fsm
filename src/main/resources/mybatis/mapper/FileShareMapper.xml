@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gtstar.fsm.mapper.FileShareMapper">
+    <resultMap id="BaseResultMap" type="com.gtstar.fsm.entity.FileShare">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="share_id" jdbcType="BIGINT" property="shareId"/>
+        <result column="link_address" jdbcType="VARCHAR" property="linkAddress"/>
+        <result column="view_count" jdbcType="INTEGER" property="viewCount"/>
+        <result column="download_count" jdbcType="INTEGER" property="downloadCount"/>
+        <result column="share_time" jdbcType="TIMESTAMP" property="shareTime"/>
+        <result column="inactive_time" jdbcType="TIMESTAMP" property="inactiveTime"/>
+    </resultMap>
+
+
+    <insert id="insertFileShare" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO file_share
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fileIds != null">
+                file_ids,
+            </if>
+            <if test="linkAddress != null">
+                link_address,
+            </if>
+            <if test="viewCount != null">
+                view_count,
+            </if>
+            <if test="downloadCount != null">
+                download_count,
+            </if>
+            <if test="shareTime != null">
+                share_time,
+            </if>
+            <if test="inactiveTime != null">
+                inactive_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fileIds != null">
+                #{fileIds,jdbcType=VARCHAR},
+            </if>
+            <if test="linkAddress != null">
+                #{linkAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="viewCount != null">
+                #{viewCount,jdbcType=INTEGER},
+            </if>
+            <if test="downloadCount != null">
+                #{downloadCount,jdbcType=INTEGER},
+            </if>
+            <if test="shareTime != null">
+                #{shareTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="inactiveTime != null">
+                #{inactiveTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="shareId">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+
+</mapper>
