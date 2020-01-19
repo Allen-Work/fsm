@@ -37,9 +37,8 @@ import java.util.zip.ZipOutputStream;
 @Service
 @Slf4j
 public class FileShareServiceImpl extends BaseService<FileShare> implements FileShareService {
-    private static final String ORIGINAL_URL = "http://127.0.0.1:8081/share/download/";
 
-    @Value("${}")
+    @Value("${download.url}")
     String originalUrl;
     @Value("${download.temp.path}")
     private String tempPath;
@@ -61,11 +60,11 @@ public class FileShareServiceImpl extends BaseService<FileShare> implements File
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
     public String generateLink(String fileIds) {
         //生成链接
-        String[] aResult = UrlUtil.shortUrl(ORIGINAL_URL);//将产生4组6位字符串
+        String[] aResult = UrlUtil.shortUrl(originalUrl);//将产生4组6位字符串
         Random random = new Random();
         int j = random.nextInt(4);//产成4以内随机数
         log.info("短链接:" + aResult[j]);//随机取一个作为短链
-        String finalUrl = ORIGINAL_URL + aResult[j];
+        String finalUrl = originalUrl + aResult[j];
         log.info("最终链接:" + finalUrl);
 
         FileShare fileShare = new FileShare();
