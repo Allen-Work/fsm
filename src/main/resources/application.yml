@@ -95,6 +95,6 @@ server:
 #下载文件的配置
 download:
   #下载的IP
-  url: http://127.0.0.1/share/download/
+  url: http://127.0.0.1:8081/share/download/
   temp:
     path: C:\Users\gtstar\Desktop\forder\

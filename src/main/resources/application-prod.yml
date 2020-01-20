@@ -95,7 +95,7 @@ server:
 #下载文件的配置
 download:
   #下载的IP
-  url: http://192.168.75.134/share/download/
+  url: http://192.168.75.134:8081/share/download/
   #存放下载文件zip的临时目录
   temp:
     path: /tmp/fms/path/
