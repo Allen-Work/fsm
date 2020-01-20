@@ -1,5 +1,6 @@
 package com.gtstar.fsm.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.gtstar.fsm.entity.FileList;
 import com.gtstar.fsm.service.FileListService;
 import com.gtstar.fsm.util.result.Ecode;
@@ -29,8 +30,10 @@ public class FileListController {
     private FileListService fileListService;
 
     @GetMapping("/getFileList")
-    public Result getFileList(FileList fileList, HttpServletResponse response) {
-        List<FileList> fileLists = new ArrayList<>();
+    public Result getFileList(@RequestParam("currentPage") int currentPage,
+                              @RequestParam("pageSize") int pageSize,
+                              FileList fileList) {
+        PageInfo<FileList> fileLists = new PageInfo<>();
         boolean isFolder = true;
         //判断是否是文件夹
         FileList file = new FileList();
@@ -40,16 +43,13 @@ public class FileListController {
         }
         if (isFolder) {
             //查询子文件
-            fileLists = fileListService.selectByFileList(new FileList().setParentId(fileList.getFileId() == null ? 0L : fileList.getFileId()));
+            fileLists = fileListService.pageInfo(new FileList().setParentId(fileList.getFileId() == null ? 0L : fileList.getFileId()),currentPage,pageSize);
             return ResultUtil.success(Ecode.SUCCESS, fileLists);
         } else {
             return ResultUtil.success("不是文件夹");
         }
     }
 
-    /*@RequestMapping(value = "/pdfPreview", method = RequestMethod.GET,
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = {"application/json; charset=UTF-8"})*/
     @GetMapping("/pdfPreview")
     public void pdfPreview(String fullfilename, Long fileId, HttpServletResponse response) {
         try {

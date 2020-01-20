@@ -172,7 +172,7 @@
             <version>2.2.3</version>
             <classifier>jdk15</classifier><!-- 指定jdk版本 -->
         </dependency>
-         <!--Json依赖架包下载 end-->
+        <!--Json依赖架包下载 end-->
 
         <!-- https://mvnrepository.com/artifact/com.jcraft/jsch -->
         <dependency>
@@ -180,6 +180,14 @@
             <artifactId>jsch</artifactId>
             <version>0.1.54</version>
         </dependency>
+
+        <!--分页插件 start-->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>1.2.5</version>
+        </dependency>
+        <!--分页插件 end-->
     </dependencies>
 
     <build>

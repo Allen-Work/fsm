@@ -1,5 +1,7 @@
 package com.gtstar.fsm.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.gtstar.fsm.entity.FileList;
 import com.gtstar.fsm.mapper.FileListMapper;
 import com.gtstar.fsm.service.FileListService;
@@ -25,6 +27,19 @@ public class FileListServiceImpl extends BaseService<FileList> implements FileLi
     private FileListMapper fileListMapper;
 
     @Override
+    public PageInfo<FileList> pageInfo(FileList fileList, int currentPage, int pageSize) {
+        PageHelper.startPage(currentPage, pageSize);
+        List<FileList> fileLists = selectByFileList(fileList);
+        return new PageInfo<>(fileLists);
+    }
+
+    @Override
+    public FileList selectByFileId(Long fileId) {
+        FileList fileList = selectByKey(fileId);
+        return fileList;
+    }
+
+    @Override
     public List<FileList> selectByFileList(FileList fileList) {
         Example example = new Example(FileList.class);
         Example.Criteria criteria = example.createCriteria();
@@ -42,17 +57,11 @@ public class FileListServiceImpl extends BaseService<FileList> implements FileLi
     }
 
     @Override
-    public FileList selectByFileId(Long fileId) {
-        FileList fileList = selectByKey(fileId);
-        return fileList;
-    }
-
-    @Override
     public List<FileList> selectByFileIds(List<Long> fileIds) {
         Example example = new Example(FileList.class);
         Example.Criteria criteria = example.createCriteria();
-        if (!CollectionUtils.isEmpty(fileIds)){
-            criteria.andIn("fileId",fileIds);
+        if (!CollectionUtils.isEmpty(fileIds)) {
+            criteria.andIn("fileId", fileIds);
         }
         Optional<List<FileList>> fileLists = Optional.of(selectByExample(example));
         return fileLists.isPresent() ? fileLists.get() : Collections.EMPTY_LIST;
